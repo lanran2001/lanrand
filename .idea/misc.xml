@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="251" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/handler/ws/echo.go" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="432" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/views/websockets.html" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="10" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/handler/ws/echo_display.go" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
+</project>

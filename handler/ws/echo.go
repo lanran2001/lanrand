@@ -2,7 +2,6 @@ package ws
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -19,15 +18,10 @@ func EchoMessage(w http.ResponseWriter, r *http.Request) {
 	for {
 		// 读取客户端的消息
 		msgType, msg, err := conn.ReadMessage()
-		log.Println("read")
 		if err != nil {
 			return
 		}
-
-		// 把消息打印到标准输出
 		fmt.Printf("%s sent: %s\n", conn.RemoteAddr(), string(msg))
-
-		// 把消息写回客户端，完成回音
 		if err = conn.WriteMessage(msgType, msg); err != nil {
 			return
 		}

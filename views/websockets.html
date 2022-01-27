@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body>
+    <ul id="example-1">
+        <li v-for="item in items" :key="item.message">
+            {{ item.message }}
+        </li>
+    </ul>
     <form>
         <input id="input" type="text" />
         <button onclick="send()" type="button">Send</button>
@@ -22,13 +27,22 @@
         var app1 = new Vue({
             el: '#app-1',
             data: {
-                    seen: true
+                seen: true
             }
         })
         var app2 = new Vue({
             el: '#app-2',
             data: {
                 seen: true
+            }
+        })
+        var example1 = new Vue({
+            el: '#example-1',
+            data: {
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ]
             }
         })
         var socket = new WebSocket("ws://9.134.82.228:8080/ws/echo");
@@ -44,6 +58,7 @@
             else if (e.data == 2){
                 app2.seen = !app2.seen
             }
+            example1.$set(example1.$data.items,0,{message: e.data})
         };
         socket.onclose = function (e) {
             console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
