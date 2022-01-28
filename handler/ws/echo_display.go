@@ -1,7 +1,11 @@
 package ws
 
-import "net/http"
+import (
+	"net/http"
 
-func DisplayEcho(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "views/websockets.html")
+	"github.com/gin-gonic/gin"
+)
+
+func DisplayEcho(c *gin.Context) {
+	http.ServeFile(c.Writer, c.Request, "views/websockets.html")
 }
