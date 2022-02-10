@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        *{
+            padding: 1mm;
+        }
+    </style>
 </head>
 <body>
     <ul id="example-1">
-        <li v-for="item in items" :key="item.message">
+        <li v-for="item in items" :key="item.message" style="display: inline-block">
             {{ item.message }}
         </li>
     </ul>
@@ -15,6 +20,11 @@
         <button onclick="send()" type="button">Send</button>
         <pre id="output"></pre>
     </form>
+    <ul id="handCards">
+        <li v-for="item in items" :key="item.num" style="display: inline-block">
+            {{ item.num }}
+        </li>
+    </ul>
     <div id="app-1">
         <p v-if="seen">111</p>
     </div>
@@ -45,13 +55,20 @@
                 ]
             }
         })
+        var handCards = new Vue({
+            el: '#handCards',
+            data: {
+                items: [
+                    { num: 'gao' },
+                ]
+            }
+        })
         var socket = new WebSocket("ws://9.134.82.228:8080/ws/echo");
         socket.onopen = function() {
             console.log("connected")
         }
         socket.onmessage = function (e) {
-            console.log(e.data)
-            //output.innerHTML += "Server: " + e.data + "\n";
+            var rawData = e.data
             if(e.data == 1) {
                 app1.seen = !app1.seen
             }
@@ -59,6 +76,11 @@
                 app2.seen = !app2.seen
             }
             example1.$set(example1.$data.items,0,{message: e.data})
+            var req = JSON.parse(rawData)
+            if (req.method == "draw") {
+                addCardToHand(req.data)
+            }
+            console.log(req)
         };
         socket.onclose = function (e) {
             console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
@@ -68,7 +90,17 @@
         var input = document.getElementById("input");
         var output = document.getElementById("output");
         function send() {
-            socket.send(input.value);
+            var jsonRequest = {
+                method: "console",
+                data: input.value
+            };
+            var jsonText = JSON.stringify(jsonRequest)
+            socket.send(jsonText);
+        }
+        function addCardToHand(card) {
+            var len = handCards.$data.items.length
+            handCards.$set(handCards.$data.items,len,{num: card})
+            console.log(len)
         }
     </script>
     
